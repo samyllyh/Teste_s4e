@@ -31,19 +31,29 @@ Partial Class Form1
         Me.btnConsultar = New System.Windows.Forms.Button()
         Me.DateTimePicker1 = New System.Windows.Forms.DateTimePicker()
         Me.DataGridView2 = New System.Windows.Forms.DataGridView()
-        Me.Button1 = New System.Windows.Forms.Button()
-        Me.Button2 = New System.Windows.Forms.Button()
-        Me.Button3 = New System.Windows.Forms.Button()
-        Me.Button4 = New System.Windows.Forms.Button()
-        Me.Button5 = New System.Windows.Forms.Button()
+        Me.AddEmp = New System.Windows.Forms.Button()
+        Me.EditarEmpresa = New System.Windows.Forms.Button()
+        Me.ExcluirEmp = New System.Windows.Forms.Button()
+        Me.ExibirEmpresa = New System.Windows.Forms.Button()
+        Me.ConsultarIDEmp = New System.Windows.Forms.Button()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.txtId = New System.Windows.Forms.TextBox()
         Me.txtNome = New System.Windows.Forms.TextBox()
         Me.txtCpf = New System.Windows.Forms.TextBox()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.txtIdEmp = New System.Windows.Forms.TextBox()
+        Me.txtNomeEmp = New System.Windows.Forms.TextBox()
+        Me.txtCnpj = New System.Windows.Forms.TextBox()
+        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.Panel2 = New System.Windows.Forms.Panel()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel1.SuspendLayout()
+        Me.Panel2.SuspendLayout()
         Me.SuspendLayout()
         '
         'DataGridView1
@@ -53,14 +63,14 @@ Partial Class Form1
         Me.DataGridView1.AllowUserToOrderColumns = True
         Me.DataGridView1.BackgroundColor = System.Drawing.Color.Turquoise
         Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridView1.Location = New System.Drawing.Point(15, 350)
+        Me.DataGridView1.Location = New System.Drawing.Point(3, 118)
         Me.DataGridView1.Name = "DataGridView1"
-        Me.DataGridView1.Size = New System.Drawing.Size(487, 235)
+        Me.DataGridView1.Size = New System.Drawing.Size(542, 211)
         Me.DataGridView1.TabIndex = 0
         '
         'BtnExibir
         '
-        Me.BtnExibir.Location = New System.Drawing.Point(167, 164)
+        Me.BtnExibir.Location = New System.Drawing.Point(567, 11)
         Me.BtnExibir.Name = "BtnExibir"
         Me.BtnExibir.Size = New System.Drawing.Size(114, 35)
         Me.BtnExibir.TabIndex = 1
@@ -70,7 +80,7 @@ Partial Class Form1
         'lebal6
         '
         Me.lebal6.AutoSize = True
-        Me.lebal6.Location = New System.Drawing.Point(12, 118)
+        Me.lebal6.Location = New System.Drawing.Point(10, 99)
         Me.lebal6.Name = "lebal6"
         Me.lebal6.Size = New System.Drawing.Size(89, 13)
         Me.lebal6.TabIndex = 4
@@ -78,7 +88,7 @@ Partial Class Form1
         '
         'BtnAdd
         '
-        Me.BtnAdd.Location = New System.Drawing.Point(12, 164)
+        Me.BtnAdd.Location = New System.Drawing.Point(567, 63)
         Me.BtnAdd.Name = "BtnAdd"
         Me.BtnAdd.Size = New System.Drawing.Size(114, 35)
         Me.BtnAdd.TabIndex = 9
@@ -87,7 +97,7 @@ Partial Class Form1
         '
         'BtnEditar
         '
-        Me.BtnEditar.Location = New System.Drawing.Point(12, 219)
+        Me.BtnEditar.Location = New System.Drawing.Point(567, 118)
         Me.BtnEditar.Name = "BtnEditar"
         Me.BtnEditar.Size = New System.Drawing.Size(114, 35)
         Me.BtnEditar.TabIndex = 10
@@ -96,7 +106,7 @@ Partial Class Form1
         '
         'btnExcluir
         '
-        Me.btnExcluir.Location = New System.Drawing.Point(12, 277)
+        Me.btnExcluir.Location = New System.Drawing.Point(567, 244)
         Me.btnExcluir.Name = "btnExcluir"
         Me.btnExcluir.Size = New System.Drawing.Size(114, 35)
         Me.btnExcluir.TabIndex = 11
@@ -105,17 +115,17 @@ Partial Class Form1
         '
         'btnConsultar
         '
-        Me.btnConsultar.Location = New System.Drawing.Point(167, 219)
+        Me.btnConsultar.Location = New System.Drawing.Point(567, 181)
         Me.btnConsultar.Name = "btnConsultar"
         Me.btnConsultar.Size = New System.Drawing.Size(114, 35)
         Me.btnConsultar.TabIndex = 12
-        Me.btnConsultar.Text = "Consultar Associados"
+        Me.btnConsultar.Text = "Consultar Id Associados"
         Me.btnConsultar.UseVisualStyleBackColor = True
         '
         'DateTimePicker1
         '
         Me.DateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.DateTimePicker1.Location = New System.Drawing.Point(118, 111)
+        Me.DateTimePicker1.Location = New System.Drawing.Point(116, 92)
         Me.DateTimePicker1.Name = "DateTimePicker1"
         Me.DateTimePicker1.Size = New System.Drawing.Size(96, 20)
         Me.DateTimePicker1.TabIndex = 13
@@ -127,60 +137,60 @@ Partial Class Form1
         Me.DataGridView2.AllowUserToOrderColumns = True
         Me.DataGridView2.BackgroundColor = System.Drawing.Color.Turquoise
         Me.DataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridView2.Location = New System.Drawing.Point(877, 350)
+        Me.DataGridView2.Location = New System.Drawing.Point(3, 134)
         Me.DataGridView2.Name = "DataGridView2"
-        Me.DataGridView2.Size = New System.Drawing.Size(487, 235)
+        Me.DataGridView2.Size = New System.Drawing.Size(542, 218)
         Me.DataGridView2.TabIndex = 16
         '
-        'Button1
+        'AddEmp
         '
-        Me.Button1.Location = New System.Drawing.Point(1213, 164)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(114, 35)
-        Me.Button1.TabIndex = 17
-        Me.Button1.Text = "Adicionar Empresas"
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.AddEmp.Location = New System.Drawing.Point(577, 71)
+        Me.AddEmp.Name = "AddEmp"
+        Me.AddEmp.Size = New System.Drawing.Size(114, 35)
+        Me.AddEmp.TabIndex = 17
+        Me.AddEmp.Text = "Adicionar Empresas"
+        Me.AddEmp.UseVisualStyleBackColor = True
         '
-        'Button2
+        'EditarEmpresa
         '
-        Me.Button2.Location = New System.Drawing.Point(1213, 205)
-        Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(114, 35)
-        Me.Button2.TabIndex = 18
-        Me.Button2.Text = "Editar Empresas"
-        Me.Button2.UseVisualStyleBackColor = True
+        Me.EditarEmpresa.Location = New System.Drawing.Point(577, 134)
+        Me.EditarEmpresa.Name = "EditarEmpresa"
+        Me.EditarEmpresa.Size = New System.Drawing.Size(114, 35)
+        Me.EditarEmpresa.TabIndex = 18
+        Me.EditarEmpresa.Text = "Editar Empresas"
+        Me.EditarEmpresa.UseVisualStyleBackColor = True
         '
-        'Button3
+        'ExcluirEmp
         '
-        Me.Button3.Location = New System.Drawing.Point(1213, 246)
-        Me.Button3.Name = "Button3"
-        Me.Button3.Size = New System.Drawing.Size(114, 35)
-        Me.Button3.TabIndex = 19
-        Me.Button3.Text = "Excluir Empresas"
-        Me.Button3.UseVisualStyleBackColor = True
+        Me.ExcluirEmp.Location = New System.Drawing.Point(577, 272)
+        Me.ExcluirEmp.Name = "ExcluirEmp"
+        Me.ExcluirEmp.Size = New System.Drawing.Size(114, 35)
+        Me.ExcluirEmp.TabIndex = 19
+        Me.ExcluirEmp.Text = "Excluir Empresas"
+        Me.ExcluirEmp.UseVisualStyleBackColor = True
         '
-        'Button4
+        'ExibirEmpresa
         '
-        Me.Button4.Location = New System.Drawing.Point(1064, 164)
-        Me.Button4.Name = "Button4"
-        Me.Button4.Size = New System.Drawing.Size(114, 35)
-        Me.Button4.TabIndex = 20
-        Me.Button4.Text = "Exibir Empresas"
-        Me.Button4.UseVisualStyleBackColor = True
+        Me.ExibirEmpresa.Location = New System.Drawing.Point(577, 20)
+        Me.ExibirEmpresa.Name = "ExibirEmpresa"
+        Me.ExibirEmpresa.Size = New System.Drawing.Size(114, 35)
+        Me.ExibirEmpresa.TabIndex = 20
+        Me.ExibirEmpresa.Text = "Exibir Empresas"
+        Me.ExibirEmpresa.UseVisualStyleBackColor = True
         '
-        'Button5
+        'ConsultarIDEmp
         '
-        Me.Button5.Location = New System.Drawing.Point(1064, 205)
-        Me.Button5.Name = "Button5"
-        Me.Button5.Size = New System.Drawing.Size(114, 35)
-        Me.Button5.TabIndex = 21
-        Me.Button5.Text = "Consultar Emrpesas"
-        Me.Button5.UseVisualStyleBackColor = True
+        Me.ConsultarIDEmp.Location = New System.Drawing.Point(577, 199)
+        Me.ConsultarIDEmp.Name = "ConsultarIDEmp"
+        Me.ConsultarIDEmp.Size = New System.Drawing.Size(114, 35)
+        Me.ConsultarIDEmp.TabIndex = 21
+        Me.ConsultarIDEmp.Text = "Consultar Id Emrpesas"
+        Me.ConsultarIDEmp.UseVisualStyleBackColor = True
         '
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(9, 66)
+        Me.Label1.Location = New System.Drawing.Point(9, 44)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(35, 13)
         Me.Label1.TabIndex = 22
@@ -189,7 +199,7 @@ Partial Class Form1
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(12, 92)
+        Me.Label2.Location = New System.Drawing.Point(10, 74)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(27, 13)
         Me.Label2.TabIndex = 23
@@ -198,7 +208,8 @@ Partial Class Form1
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(12, 40)
+        Me.Label4.ForeColor = System.Drawing.SystemColors.ActiveCaptionText
+        Me.Label4.Location = New System.Drawing.Point(14, 18)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(18, 13)
         Me.Label4.TabIndex = 25
@@ -206,57 +217,132 @@ Partial Class Form1
         '
         'txtId
         '
-        Me.txtId.Location = New System.Drawing.Point(118, 33)
+        Me.txtId.Location = New System.Drawing.Point(55, 11)
         Me.txtId.Name = "txtId"
         Me.txtId.Size = New System.Drawing.Size(100, 20)
         Me.txtId.TabIndex = 26
         '
         'txtNome
         '
-        Me.txtNome.Location = New System.Drawing.Point(118, 59)
+        Me.txtNome.Location = New System.Drawing.Point(55, 37)
         Me.txtNome.Name = "txtNome"
-        Me.txtNome.Size = New System.Drawing.Size(100, 20)
+        Me.txtNome.Size = New System.Drawing.Size(192, 20)
         Me.txtNome.TabIndex = 27
         '
         'txtCpf
         '
-        Me.txtCpf.Location = New System.Drawing.Point(118, 85)
+        Me.txtCpf.Location = New System.Drawing.Point(55, 67)
         Me.txtCpf.Name = "txtCpf"
-        Me.txtCpf.Size = New System.Drawing.Size(100, 20)
+        Me.txtCpf.Size = New System.Drawing.Size(192, 20)
         Me.txtCpf.TabIndex = 28
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(10, 35)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(61, 13)
+        Me.Label3.TabIndex = 29
+        Me.Label3.Text = "ID empresa"
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Location = New System.Drawing.Point(7, 61)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(78, 13)
+        Me.Label5.TabIndex = 30
+        Me.Label5.Text = "Nome empresa"
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Location = New System.Drawing.Point(10, 93)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(34, 13)
+        Me.Label6.TabIndex = 31
+        Me.Label6.Text = "CNPJ"
+        '
+        'txtIdEmp
+        '
+        Me.txtIdEmp.Location = New System.Drawing.Point(116, 28)
+        Me.txtIdEmp.Name = "txtIdEmp"
+        Me.txtIdEmp.Size = New System.Drawing.Size(100, 20)
+        Me.txtIdEmp.TabIndex = 32
+        '
+        'txtNomeEmp
+        '
+        Me.txtNomeEmp.Location = New System.Drawing.Point(116, 54)
+        Me.txtNomeEmp.Name = "txtNomeEmp"
+        Me.txtNomeEmp.Size = New System.Drawing.Size(192, 20)
+        Me.txtNomeEmp.TabIndex = 33
+        '
+        'txtCnpj
+        '
+        Me.txtCnpj.Location = New System.Drawing.Point(116, 86)
+        Me.txtCnpj.Name = "txtCnpj"
+        Me.txtCnpj.Size = New System.Drawing.Size(192, 20)
+        Me.txtCnpj.TabIndex = 34
+        '
+        'Panel1
+        '
+        Me.Panel1.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Panel1.Controls.Add(Me.BtnEditar)
+        Me.Panel1.Controls.Add(Me.DateTimePicker1)
+        Me.Panel1.Controls.Add(Me.txtCpf)
+        Me.Panel1.Controls.Add(Me.DataGridView1)
+        Me.Panel1.Controls.Add(Me.BtnAdd)
+        Me.Panel1.Controls.Add(Me.BtnExibir)
+        Me.Panel1.Controls.Add(Me.lebal6)
+        Me.Panel1.Controls.Add(Me.btnConsultar)
+        Me.Panel1.Controls.Add(Me.Label2)
+        Me.Panel1.Controls.Add(Me.txtNome)
+        Me.Panel1.Controls.Add(Me.Label1)
+        Me.Panel1.Controls.Add(Me.txtId)
+        Me.Panel1.Controls.Add(Me.btnExcluir)
+        Me.Panel1.Controls.Add(Me.Label4)
+        Me.Panel1.Location = New System.Drawing.Point(2, 15)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Size = New System.Drawing.Size(716, 332)
+        Me.Panel1.TabIndex = 35
+        '
+        'Panel2
+        '
+        Me.Panel2.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Panel2.Controls.Add(Me.txtCnpj)
+        Me.Panel2.Controls.Add(Me.txtNomeEmp)
+        Me.Panel2.Controls.Add(Me.DataGridView2)
+        Me.Panel2.Controls.Add(Me.Label5)
+        Me.Panel2.Controls.Add(Me.txtIdEmp)
+        Me.Panel2.Controls.Add(Me.Label3)
+        Me.Panel2.Controls.Add(Me.Label6)
+        Me.Panel2.Controls.Add(Me.ConsultarIDEmp)
+        Me.Panel2.Controls.Add(Me.ExibirEmpresa)
+        Me.Panel2.Controls.Add(Me.ExcluirEmp)
+        Me.Panel2.Controls.Add(Me.EditarEmpresa)
+        Me.Panel2.Controls.Add(Me.AddEmp)
+        Me.Panel2.Location = New System.Drawing.Point(2, 362)
+        Me.Panel2.Name = "Panel2"
+        Me.Panel2.Size = New System.Drawing.Size(716, 355)
+        Me.Panel2.TabIndex = 36
         '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(1376, 629)
-        Me.Controls.Add(Me.txtCpf)
-        Me.Controls.Add(Me.txtNome)
-        Me.Controls.Add(Me.txtId)
-        Me.Controls.Add(Me.Label4)
-        Me.Controls.Add(Me.Label2)
-        Me.Controls.Add(Me.Label1)
-        Me.Controls.Add(Me.Button5)
-        Me.Controls.Add(Me.Button4)
-        Me.Controls.Add(Me.Button3)
-        Me.Controls.Add(Me.Button2)
-        Me.Controls.Add(Me.Button1)
-        Me.Controls.Add(Me.DataGridView2)
-        Me.Controls.Add(Me.DateTimePicker1)
-        Me.Controls.Add(Me.btnConsultar)
-        Me.Controls.Add(Me.btnExcluir)
-        Me.Controls.Add(Me.BtnEditar)
-        Me.Controls.Add(Me.BtnAdd)
-        Me.Controls.Add(Me.lebal6)
-        Me.Controls.Add(Me.BtnExibir)
-        Me.Controls.Add(Me.DataGridView1)
+        Me.ClientSize = New System.Drawing.Size(856, 746)
+        Me.Controls.Add(Me.Panel2)
+        Me.Controls.Add(Me.Panel1)
         Me.Name = "Form1"
         Me.Text = "Naosei"
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.Panel1.ResumeLayout(False)
+        Me.Panel1.PerformLayout()
+        Me.Panel2.ResumeLayout(False)
+        Me.Panel2.PerformLayout()
         Me.ResumeLayout(False)
-        Me.PerformLayout()
 
     End Sub
 
@@ -269,15 +355,23 @@ Partial Class Form1
     Friend WithEvents btnConsultar As Button
     Friend WithEvents DateTimePicker1 As DateTimePicker
     Friend WithEvents DataGridView2 As DataGridView
-    Friend WithEvents Button1 As Button
-    Friend WithEvents Button2 As Button
-    Friend WithEvents Button3 As Button
-    Friend WithEvents Button4 As Button
-    Friend WithEvents Button5 As Button
+    Friend WithEvents AddEmp As Button
+    Friend WithEvents EditarEmpresa As Button
+    Friend WithEvents ExcluirEmp As Button
+    Friend WithEvents ExibirEmpresa As Button
+    Friend WithEvents ConsultarIDEmp As Button
     Friend WithEvents Label1 As Label
     Friend WithEvents Label2 As Label
     Friend WithEvents Label4 As Label
     Friend WithEvents txtId As TextBox
     Friend WithEvents txtNome As TextBox
     Friend WithEvents txtCpf As TextBox
+    Friend WithEvents Label3 As Label
+    Friend WithEvents Label5 As Label
+    Friend WithEvents Label6 As Label
+    Friend WithEvents txtIdEmp As TextBox
+    Friend WithEvents txtNomeEmp As TextBox
+    Friend WithEvents txtCnpj As TextBox
+    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Panel2 As Panel
 End Class
