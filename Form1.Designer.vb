@@ -137,9 +137,9 @@ Partial Class Form1
         Me.DataGridView2.AllowUserToOrderColumns = True
         Me.DataGridView2.BackgroundColor = System.Drawing.Color.Turquoise
         Me.DataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridView2.Location = New System.Drawing.Point(3, 134)
+        Me.DataGridView2.Location = New System.Drawing.Point(13, 114)
         Me.DataGridView2.Name = "DataGridView2"
-        Me.DataGridView2.Size = New System.Drawing.Size(542, 218)
+        Me.DataGridView2.Size = New System.Drawing.Size(542, 207)
         Me.DataGridView2.TabIndex = 16
         '
         'AddEmp
@@ -321,9 +321,9 @@ Partial Class Form1
         Me.Panel2.Controls.Add(Me.ExcluirEmp)
         Me.Panel2.Controls.Add(Me.EditarEmpresa)
         Me.Panel2.Controls.Add(Me.AddEmp)
-        Me.Panel2.Location = New System.Drawing.Point(2, 362)
+        Me.Panel2.Location = New System.Drawing.Point(2, 353)
         Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(716, 355)
+        Me.Panel2.Size = New System.Drawing.Size(716, 332)
         Me.Panel2.TabIndex = 36
         '
         'Form1
@@ -331,7 +331,7 @@ Partial Class Form1
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(856, 746)
+        Me.ClientSize = New System.Drawing.Size(723, 709)
         Me.Controls.Add(Me.Panel2)
         Me.Controls.Add(Me.Panel1)
         Me.Name = "Form1"

@@ -67,7 +67,7 @@ Public Class Form1
             command = Nothing
         End Try
     End Sub
-    Private Sub btnConsultar_Click(sender As Object, e As EventArgs) Handles btnConsultar.Click
+    Private Sub btnConsultar_Click(sender As Object, e As EventArgs) Handles btnConsultar.Click 'consultar associado por Id
         Try
             connection = New SqlConnection("Data Source=DESKTOP-TRVTAH5\SQLEXPRESS;Initial Catalog=S4E;Integrated Security=True")
             connection.Open()
@@ -92,6 +92,7 @@ Public Class Form1
     Private Sub BtnEditar_Click(sender As Object, e As EventArgs) Handles BtnEditar.Click
         Try
             connection = New SqlConnection("Data Source=DESKTOP-TRVTAH5\SQLEXPRESS;Initial Catalog=S4E;Integrated Security=True")
+            connection.Open()
 
             strSQL = "UPDATE associados SET NOME = @NOME, CPF = @CPF, DATANASCIMENTO = @DATANASCIMENTO WHERE Id_associado = @ID"
 
@@ -99,10 +100,10 @@ Public Class Form1
             command.Parameters.AddWithValue("@Id", txtId.Text)
             command.Parameters.AddWithValue("@NOME", txtNome.Text)
             command.Parameters.AddWithValue("@CPF", txtCpf.Text)
-            command.Parameters.AddWithValue("@DATANASCIMENTO", lebal6.Text)
+            command.Parameters.AddWithValue("@DATANASCIMENTO", DateTimePicker1.Text)
 
-            connection.Open()
             command.ExecuteNonQuery()
+            MessageBox.Show("Editado com sucesso!")
         Catch ex As Exception
             MsgBox(ex.Message)
         Finally
@@ -134,7 +135,8 @@ Public Class Form1
         End Try
     End Sub
 
-    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles ExibirEmpresa.Click
+    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles ExibirEmpresa.Click 'exibir todas as empresas
+
         Try
             connection = New SqlConnection("Data Source=DESKTOP-TRVTAH5\SQLEXPRESS;Initial Catalog=S4E;Integrated Security=True")
 
@@ -158,7 +160,7 @@ Public Class Form1
         End Try
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles AddEmp.Click
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles AddEmp.Click 'adicionar empresa
         Try
             connection = New SqlConnection("Data Source=DESKTOP-TRVTAH5\SQLEXPRESS;Initial Catalog=S4E;Integrated Security=True")
             connection.Open()
@@ -190,9 +192,10 @@ Public Class Form1
         End Try
     End Sub
 
-    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles EditarEmpresa.Click
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles EditarEmpresa.Click 'editar empresa
         Try
             connection = New SqlConnection("Data Source=DESKTOP-TRVTAH5\SQLEXPRESS;Initial Catalog=S4E;Integrated Security=True")
+            connection.Open()
 
             strSQL = "UPDATE empresas SET NOME = @NOME, CNPJ = @CNPJ WHERE Id_empresa = @ID"
 
@@ -201,8 +204,9 @@ Public Class Form1
             command.Parameters.AddWithValue("@NOME", txtNomeEmp.Text)
             command.Parameters.AddWithValue("@CNPJ", txtCnpj.Text)
 
-            connection.Open()
+
             command.ExecuteNonQuery()
+            MessageBox.Show("Excluido com sucesso!")
         Catch ex As Exception
             MsgBox(ex.Message)
         Finally
@@ -213,7 +217,7 @@ Public Class Form1
         End Try
     End Sub
 
-    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles ExcluirEmp.Click
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles ExcluirEmp.Click 'deletar empresa
         Try
             connection = New SqlConnection("Data Source=DESKTOP-TRVTAH5\SQLEXPRESS;Initial Catalog=S4E;Integrated Security=True")
 
@@ -224,6 +228,7 @@ Public Class Form1
 
             connection.Open()
             command.ExecuteNonQuery()
+            MessageBox.Show("exluido com sucesso!")
         Catch ex As Exception
             MsgBox(ex.Message)
         Finally
@@ -234,26 +239,23 @@ Public Class Form1
         End Try
     End Sub
 
-    Private Sub Button5_Click(sender As Object, e As EventArgs) Handles ConsultarIDEmp.Click
+    Private Sub Button5_Click(sender As Object, e As EventArgs) Handles ConsultarIDEmp.Click 'pesquisar empresa por Id
         Try
             connection = New SqlConnection("Data Source=DESKTOP-TRVTAH5\SQLEXPRESS;Initial Catalog=S4E;Integrated Security=True")
-
-            strSQL = "SELECT * FROM empresas WHERE Id_empresa = @ID"
-
-            command = New SqlCommand(strSQL, connection)
-            command.Parameters.AddWithValue("@Id", txtId.Text)
             connection.Open()
 
-            dr = command.ExecuteReader
-            Do While dr.Read
-                txtNomeEmp.Text = dr("Nome")
-                txtCnpj.Text = dr("Cnpj")
-            Loop
+            strSQL = "SELECT * FROM empresas WHERE Id_empresa = '" & txtIdEmp.Text & "'"
+
+            da = New SqlDataAdapter(strSQL, connection)
+            Using dr = New DataTable()
+                da.Fill(dr)
+                DataGridView2.DataSource = dr
+            End Using
+
         Catch ex As Exception
             MsgBox(ex.Message)
         Finally
             connection.Close()
-            command.Clone()
             connection = Nothing
             command = Nothing
             dr = Nothing
