@@ -48,7 +48,7 @@ Public Class Form1
         End Try
     End Sub
 
-    Private Sub BtnAdd_Click(sender As Object, e As EventArgs) Handles BtnAdd.Click
+    Private Sub BtnAdd_Click(sender As Object, e As EventArgs) Handles BtnAdd.Click 'adicionar associado
 
         Try
             connection = New SqlConnection("Data Source=DESKTOP-TRVTAH5\SQLEXPRESS;Initial Catalog=S4E;Integrated Security=True")
@@ -131,7 +131,7 @@ Public Class Form1
         Return -1 ' Valor padrão se nenhum item for selecionado ou o índice for inválido
     End Function
 
-    Private Sub BtnExibir_Click(sender As Object, e As EventArgs) Handles BtnExibir.Click
+    Private Sub BtnExibir_Click(sender As Object, e As EventArgs) Handles BtnExibir.Click 'exibir todos os associados
         Try
             connection = New SqlConnection("Data Source=DESKTOP-TRVTAH5\SQLEXPRESS;Initial Catalog=S4E;Integrated Security=True")
 
@@ -176,21 +176,53 @@ Public Class Form1
             dr = Nothing
         End Try
     End Sub
-    Private Sub BtnEditar_Click(sender As Object, e As EventArgs) Handles BtnEditar.Click
+    Private Sub BtnEditar_Click(sender As Object, e As EventArgs) Handles BtnEditar.Click 'editar associados
         Try
-            connection = New SqlConnection("Data Source=DESKTOP-TRVTAH5\SQLEXPRESS;Initial Catalog=S4E;Integrated Security=True")
-            connection.Open()
+            ' Atualizar os dados cadastrais do associado
 
-            strSQL = "UPDATE associados SET NOME = @NOME, CPF = @CPF, DATANASCIMENTO = @DATANASCIMENTO WHERE Id_associado = @ID"
+            Using connection As New SqlConnection("Data Source=DESKTOP-TRVTAH5\SQLEXPRESS;Initial Catalog=S4E;Integrated Security=True")
+                connection.Open()
+                strSQL = "UPDATE associados SET NOME = @NOME, CPF = @CPF, DATANASCIMENTO = @DATANASCIMENTO WHERE Id_associado = @ID"
+                Using command As New SqlCommand(strSQL, connection)
+                    command.Parameters.AddWithValue("@ID", txtId.Text)
+                    command.Parameters.AddWithValue("@NOME", txtNome.Text)
+                    command.Parameters.AddWithValue("@CPF", txtCpf.Text)
+                    command.Parameters.AddWithValue("@DATANASCIMENTO", DateTimePicker1.Value)
 
-            command = New SqlCommand(strSQL, connection)
-            command.Parameters.AddWithValue("@Id", txtId.Text)
-            command.Parameters.AddWithValue("@NOME", txtNome.Text)
-            command.Parameters.AddWithValue("@CPF", txtCpf.Text)
-            command.Parameters.AddWithValue("@DATANASCIMENTO", DateTimePicker1.Text)
+                    command.ExecuteNonQuery()
+                End Using
+            End Using
 
-            command.ExecuteNonQuery()
-            MessageBox.Show("Editado com sucesso!")
+            ' Remover as associações existentes do associado com empresas
+            strSQL = "DELETE FROM Relacionamento WHERE Id_asso = @IdAssociado"
+            Using connection As New SqlConnection("Data Source=DESKTOP-TRVTAH5\SQLEXPRESS;Initial Catalog=S4E;Integrated Security=True")
+                connection.Open()
+                Using command As New SqlCommand(strSQL, connection)
+                    command.Parameters.AddWithValue("@IdAssociado", txtId.Text)
+
+                    command.ExecuteNonQuery()
+                End Using
+            End Using
+
+            ' Adicionar as novas associações do associado com empresas
+            For Each item In CheckedListBox1.CheckedItems
+                Dim idEmpresa As Integer = GetCompanyIdByName(item.ToString())
+
+                If idEmpresa <> -1 Then
+                    strSQL = "INSERT INTO Relacionamento (Id_empre, Id_asso) VALUES (@IdEmpresa, @IdAssociado)"
+                    Using connection As New SqlConnection("Data Source=DESKTOP-TRVTAH5\SQLEXPRESS;Initial Catalog=S4E;Integrated Security=True")
+                        connection.Open()
+                        Using command As New SqlCommand(strSQL, connection)
+                            command.Parameters.AddWithValue("@IdAssociado", txtId.Text)
+                            command.Parameters.AddWithValue("@IdEmpresa", idEmpresa)
+
+                            command.ExecuteNonQuery()
+                        End Using
+                    End Using
+                End If
+            Next
+
+            MessageBox.Show("Alterações salvas com sucesso!")
         Catch ex As Exception
             MsgBox(ex.Message)
         Finally
@@ -201,6 +233,34 @@ Public Class Form1
         End Try
     End Sub
 
+    Private Function GetCompanyIdByName(index As String) As Integer
+        If index >= 0 AndAlso index < CheckedListBox1.Items.Count Then
+            ' Obter o nome da empresa selecionada
+            Dim selectedEmpresa As String = CheckedListBox1.Items(index).ToString()
+
+            ' Obter o ID da empresa a partir do banco de dados usando o nome da empresa
+            Dim idEmpresa As Integer = -1 ' Valor padrão se não for possível obter o ID
+
+            Dim connectionString As String = "Data Source=DESKTOP-TRVTAH5\SQLEXPRESS;Initial Catalog=S4E;Integrated Security=True"
+            Using connection As New SqlConnection(connectionString)
+                connection.Open()
+
+                Dim query As String = "SELECT Id_empresa FROM empresas WHERE Nome = @Nome"
+                Using command As New SqlCommand(query, connection)
+                    command.Parameters.AddWithValue("@Nome", selectedEmpresa)
+
+                    Dim result As Object = command.ExecuteScalar()
+                    If result IsNot Nothing AndAlso Not DBNull.Value.Equals(result) Then
+                        idEmpresa = Convert.ToInt32(result)
+                    End If
+                End Using
+            End Using
+
+            Return idEmpresa
+        End If
+
+        Return -1 ' Valor padrão se nenhum item for selecionado ou o índice for inválido
+    End Function
     Private Sub btnExcluir_Click(sender As Object, e As EventArgs) Handles btnExcluir.Click
         Try
             connection = New SqlConnection("Data Source=DESKTOP-TRVTAH5\SQLEXPRESS;Initial Catalog=S4E;Integrated Security=True")
@@ -386,9 +446,37 @@ Public Class Form1
             command.Parameters.AddWithValue("@NOME", txtNomeEmp.Text)
             command.Parameters.AddWithValue("@CNPJ", txtCnpj.Text)
 
-
             command.ExecuteNonQuery()
-            MessageBox.Show("Excluido com sucesso!")
+
+            ' Remover as associações existentes da empresa com associado
+            strSQL = "DELETE FROM Relacionamento WHERE Id_empre = @IdEmpresa"
+            Using connection As New SqlConnection("Data Source=DESKTOP-TRVTAH5\SQLEXPRESS;Initial Catalog=S4E;Integrated Security=True")
+                connection.Open()
+                Using command As New SqlCommand(strSQL, connection)
+                    command.Parameters.AddWithValue("@IdEmpresa", txtIdEmp.Text)
+
+                    command.ExecuteNonQuery()
+                End Using
+            End Using
+
+            ' Adicionar as novas associações da empresa com associado
+            For Each item In CheckedListBox1.CheckedItems
+                Dim idAssociado As Integer = GetCompanyIdByName2(item.ToString())
+
+                If idAssociado <> -1 Then
+                    strSQL = "INSERT INTO Relacionamento (Id_empre, Id_asso) VALUES (@IdEmpresa, @IdAssociado)"
+                    Using connection As New SqlConnection("Data Source=DESKTOP-TRVTAH5\SQLEXPRESS;Initial Catalog=S4E;Integrated Security=True")
+                        connection.Open()
+                        Using command As New SqlCommand(strSQL, connection)
+                            command.Parameters.AddWithValue("@IdAssociado", idAssociado)
+                            command.Parameters.AddWithValue("@IdEmpresa", txtIdEmp.Text)
+
+                            command.ExecuteNonQuery()
+                        End Using
+                    End Using
+                End If
+            Next
+            MessageBox.Show("Editado com sucesso!")
         Catch ex As Exception
             MsgBox(ex.Message)
         Finally
@@ -398,6 +486,35 @@ Public Class Form1
             command = Nothing
         End Try
     End Sub
+
+    Private Function GetCompanyIdByName2(index As String) As Integer
+        If index >= 0 AndAlso index < CheckedListBox1.Items.Count Then
+            ' Obter o nome do associado selecionada
+            Dim selectedAssociado As String = CheckedListBox1.Items(index).ToString()
+
+            ' Obter o ID do associado a partir do banco de dados usando o nome do associado
+            Dim idAssociado As Integer = -1 ' Valor padrão se não for possível obter o ID
+
+            Dim connectionString As String = "Data Source=DESKTOP-TRVTAH5\SQLEXPRESS;Initial Catalog=S4E;Integrated Security=True"
+            Using connection As New SqlConnection(connectionString)
+                connection.Open()
+
+                Dim query As String = "SELECT Id_associado FROM associado WHERE Nome = @Nome"
+                Using command As New SqlCommand(query, connection)
+                    command.Parameters.AddWithValue("@Nome", selectedAssociado)
+
+                    Dim result As Object = command.ExecuteScalar()
+                    If result IsNot Nothing AndAlso Not DBNull.Value.Equals(result) Then
+                        idAssociado = Convert.ToInt32(result)
+                    End If
+                End Using
+            End Using
+
+            Return idAssociado
+        End If
+
+        Return -1 ' Valor padrão se nenhum item for selecionado ou o índice for inválido
+    End Function
 
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles ExcluirEmp.Click 'deletar empresa
         Try
