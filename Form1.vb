@@ -1,6 +1,7 @@
 ﻿Imports System.Data.SqlClient
 Imports System.Diagnostics.Eventing
 Imports System.Diagnostics.Eventing.Reader
+Imports Teste_s4e.S4EDataSetTableAdapters
 
 Public Class Form1
     Private connection As SqlConnection
@@ -10,7 +11,9 @@ Public Class Form1
 
     Private strSQL As String
 
+
     Private Sub BtnAdd_Click(sender As Object, e As EventArgs) Handles BtnAdd.Click
+
         Try
             connection = New SqlConnection("Data Source=DESKTOP-TRVTAH5\SQLEXPRESS;Initial Catalog=S4E;Integrated Security=True")
             connection.Open()
@@ -31,7 +34,11 @@ Public Class Form1
                 command.Parameters.AddWithValue("@CPF", txtCpf.Text)
                 command.Parameters.AddWithValue("@DATANASCIMENTO", DateTimePicker1.Text)
 
+                Dim IdAsso As Integer = Convert.ToInt32(command.ExecuteScalar())
                 command.ExecuteNonQuery()
+                RelacionamentoAssociadoEmpresa()
+
+
                 MessageBox.Show("Adicionado com sucesso!")
             End If
         Catch ex As Exception
@@ -42,6 +49,34 @@ Public Class Form1
             connection = Nothing
             command = Nothing
         End Try
+    End Sub
+
+    Private Sub RelacionamentoAssociadoEmpresa()
+        Try
+            connection = New SqlConnection("Data Source=DESKTOP-TRVTAH5\SQLEXPRESS;Initial Catalog=S4E;Integrated Security=True")
+            connection.Open()
+
+            Dim empre As String = "SELECT * FROM empresas WHERE CNPJ = @cnpj; SELECT SCOPE_IDENTITY();"
+            command = New SqlCommand(empre, connection)
+            command.Parameters.AddWithValue("@cnpj", txtCNPJasso.Text)
+            Dim IdEmp As Integer = Convert.ToInt32(command.ExecuteScalar())
+
+            Dim asso As String = "SELECT * FROM associados WHERE CPF = @IdAsso"
+            command = New SqlCommand(asso, connection)
+            command.Parameters.AddWithValue("@IdAsso", txtCpf.Text)
+            Dim IdAssociado As Integer = Convert.ToInt32(command.ExecuteScalar())
+
+            Dim relacionamento As String = "INSERT INTO Relacionamento (Id_empre, Id_asso) VALUES (@IdEmp, @IdAssociado)"
+            command = New SqlCommand(relacionamento, connection)
+            command.Parameters.AddWithValue("@IdEmp", IdEmp)
+            command.Parameters.AddWithValue("@IdAssociado", IdAssociado)
+
+            command.ExecuteNonQuery()
+            connection.Close()
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+
     End Sub
 
     Private Sub BtnExibir_Click(sender As Object, e As EventArgs) Handles BtnExibir.Click
@@ -125,6 +160,8 @@ Public Class Form1
 
             connection.Open()
             command.ExecuteNonQuery()
+            ExluirRelacionamentoAssociadoEmpresa()
+
         Catch ex As Exception
             MsgBox(ex.Message)
         Finally
@@ -135,6 +172,21 @@ Public Class Form1
         End Try
     End Sub
 
+    Private Sub ExluirRelacionamentoAssociadoEmpresa()
+        Try
+            connection = New SqlConnection("Data Source=DESKTOP-TRVTAH5\SQLEXPRESS;Initial Catalog=S4E;Integrated Security=True")
+            connection.Open()
+
+            strSQL = "DELETE Relacionamento WHERE Id_asso = @Id"
+
+            command = New SqlCommand(strSQL, connection)
+            command.Parameters.AddWithValue("@Id", txtId.Text)
+
+            command.ExecuteNonQuery()
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+    End Sub
     Private Sub Button4_Click(sender As Object, e As EventArgs) Handles ExibirEmpresa.Click 'exibir todas as empresas
 
         Try
@@ -171,7 +223,7 @@ Public Class Form1
 
             Dim count As Integer = Convert.ToInt32(command.ExecuteScalar())
 
-            If (count > 0) Then 'esse if nao pega????? 
+            If (count > 0) Then
                 MsgBox("Este CNPJ ja esta cadastrado")
             Else
                 strSQL = "INSERT INTO empresas (Nome,CNPJ) VALUES (@NOME, @CNPJ)"
@@ -180,6 +232,8 @@ Public Class Form1
                 command.Parameters.AddWithValue("@NOME", txtNomeEmp.Text)
                 command.Parameters.AddWithValue("@CNPJ", txtCnpj.Text)
                 command.ExecuteNonQuery()
+
+                RelacionamentoEmpresaAssociado()
                 MessageBox.Show("Adicionado com sucesso!")
             End If
         Catch ex As Exception
@@ -192,6 +246,32 @@ Public Class Form1
         End Try
     End Sub
 
+    Private Sub RelacionamentoEmpresaAssociado()
+        Try
+            connection = New SqlConnection("Data Source=DESKTOP-TRVTAH5\SQLEXPRESS;Initial Catalog=S4E;Integrated Security=True")
+            connection.Open()
+
+            Dim empre As String = "SELECT * FROM empresas WHERE CNPJ = @cnpj; SELECT SCOPE_IDENTITY();"
+            command = New SqlCommand(empre, connection)
+            command.Parameters.AddWithValue("@cnpj", txtCnpj.Text)
+            Dim IdEmp As Integer = Convert.ToInt32(command.ExecuteScalar())
+
+            Dim asso As String = "SELECT * FROM associados WHERE CPF = @IdAsso"
+            command = New SqlCommand(asso, connection)
+            command.Parameters.AddWithValue("@IdAsso", txtCpfAssociado.Text)
+            Dim IdAssociado As Integer = Convert.ToInt32(command.ExecuteScalar())
+
+            Dim relacionamento As String = "INSERT INTO Relacionamento (Id_empre, Id_asso) VALUES (@IdEmp, @IdAssociado)"
+            command = New SqlCommand(relacionamento, connection)
+            command.Parameters.AddWithValue("@IdEmp", IdEmp)
+            command.Parameters.AddWithValue("@IdAssociado", IdAssociado)
+
+            command.ExecuteNonQuery()
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+
+    End Sub
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles EditarEmpresa.Click 'editar empresa
         Try
             connection = New SqlConnection("Data Source=DESKTOP-TRVTAH5\SQLEXPRESS;Initial Catalog=S4E;Integrated Security=True")
@@ -226,8 +306,11 @@ Public Class Form1
             command = New SqlCommand(strSQL, connection)
             command.Parameters.AddWithValue("@ID", txtIdEmp.Text)
 
+            ExluirRelacionamentoEmpresaAssociado()
             connection.Open()
+
             command.ExecuteNonQuery()
+
             MessageBox.Show("exluido com sucesso!")
         Catch ex As Exception
             MsgBox(ex.Message)
@@ -239,6 +322,22 @@ Public Class Form1
         End Try
     End Sub
 
+    Private Sub ExluirRelacionamentoEmpresaAssociado()
+        Try
+            connection = New SqlConnection("Data Source=DESKTOP-TRVTAH5\SQLEXPRESS;Initial Catalog=S4E;Integrated Security=True")
+            connection.Open()
+
+            strSQL = "DELETE Relacionamento WHERE Id_empre = @IdEmp"
+
+            command = New SqlCommand(strSQL, connection)
+            command.Parameters.AddWithValue("@IdEmp", txtIdEmp.Text)
+
+            command.ExecuteNonQuery()
+            connection.Close()
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+    End Sub
     Private Sub Button5_Click(sender As Object, e As EventArgs) Handles ConsultarIDEmp.Click 'pesquisar empresa por Id
         Try
             connection = New SqlConnection("Data Source=DESKTOP-TRVTAH5\SQLEXPRESS;Initial Catalog=S4E;Integrated Security=True")
@@ -261,6 +360,4 @@ Public Class Form1
             dr = Nothing
         End Try
     End Sub
-
-
 End Class
