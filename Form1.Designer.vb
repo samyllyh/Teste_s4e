@@ -49,15 +49,9 @@ Partial Class Form1
         Me.txtNomeEmp = New System.Windows.Forms.TextBox()
         Me.txtCnpj = New System.Windows.Forms.TextBox()
         Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.txtCNPJasso = New System.Windows.Forms.TextBox()
-        Me.txtEmpAsso = New System.Windows.Forms.TextBox()
-        Me.Label8 = New System.Windows.Forms.Label()
-        Me.Label7 = New System.Windows.Forms.Label()
+        Me.CheckedListBox1 = New System.Windows.Forms.CheckedListBox()
         Me.Panel2 = New System.Windows.Forms.Panel()
-        Me.Label9 = New System.Windows.Forms.Label()
-        Me.Label10 = New System.Windows.Forms.Label()
-        Me.txtNomeAsso = New System.Windows.Forms.TextBox()
-        Me.txtCpfAssociado = New System.Windows.Forms.TextBox()
+        Me.CheckedListBox2 = New System.Windows.Forms.CheckedListBox()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel1.SuspendLayout()
@@ -295,10 +289,7 @@ Partial Class Form1
         'Panel1
         '
         Me.Panel1.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.Panel1.Controls.Add(Me.txtCNPJasso)
-        Me.Panel1.Controls.Add(Me.txtEmpAsso)
-        Me.Panel1.Controls.Add(Me.Label8)
-        Me.Panel1.Controls.Add(Me.Label7)
+        Me.Panel1.Controls.Add(Me.CheckedListBox1)
         Me.Panel1.Controls.Add(Me.BtnEditar)
         Me.Panel1.Controls.Add(Me.DateTimePicker1)
         Me.Panel1.Controls.Add(Me.txtCpf)
@@ -318,45 +309,18 @@ Partial Class Form1
         Me.Panel1.Size = New System.Drawing.Size(716, 332)
         Me.Panel1.TabIndex = 35
         '
-        'txtCNPJasso
+        'CheckedListBox1
         '
-        Me.txtCNPJasso.Location = New System.Drawing.Point(378, 37)
-        Me.txtCNPJasso.Name = "txtCNPJasso"
-        Me.txtCNPJasso.Size = New System.Drawing.Size(135, 20)
-        Me.txtCNPJasso.TabIndex = 32
-        '
-        'txtEmpAsso
-        '
-        Me.txtEmpAsso.Location = New System.Drawing.Point(378, 11)
-        Me.txtEmpAsso.Name = "txtEmpAsso"
-        Me.txtEmpAsso.Size = New System.Drawing.Size(135, 20)
-        Me.txtEmpAsso.TabIndex = 31
-        '
-        'Label8
-        '
-        Me.Label8.AutoSize = True
-        Me.Label8.Location = New System.Drawing.Point(293, 44)
-        Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(34, 13)
-        Me.Label8.TabIndex = 30
-        Me.Label8.Text = "CNPJ"
-        '
-        'Label7
-        '
-        Me.Label7.AutoSize = True
-        Me.Label7.Location = New System.Drawing.Point(293, 18)
-        Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(79, 13)
-        Me.Label7.TabIndex = 29
-        Me.Label7.Text = "Nome Empresa"
+        Me.CheckedListBox1.FormattingEnabled = True
+        Me.CheckedListBox1.Location = New System.Drawing.Point(375, 11)
+        Me.CheckedListBox1.Name = "CheckedListBox1"
+        Me.CheckedListBox1.Size = New System.Drawing.Size(120, 94)
+        Me.CheckedListBox1.TabIndex = 33
         '
         'Panel2
         '
         Me.Panel2.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.Panel2.Controls.Add(Me.txtCpfAssociado)
-        Me.Panel2.Controls.Add(Me.txtNomeAsso)
-        Me.Panel2.Controls.Add(Me.Label10)
-        Me.Panel2.Controls.Add(Me.Label9)
+        Me.Panel2.Controls.Add(Me.CheckedListBox2)
         Me.Panel2.Controls.Add(Me.txtCnpj)
         Me.Panel2.Controls.Add(Me.txtNomeEmp)
         Me.Panel2.Controls.Add(Me.DataGridView2)
@@ -374,37 +338,13 @@ Partial Class Form1
         Me.Panel2.Size = New System.Drawing.Size(716, 332)
         Me.Panel2.TabIndex = 36
         '
-        'Label9
+        'CheckedListBox2
         '
-        Me.Label9.AutoSize = True
-        Me.Label9.Location = New System.Drawing.Point(317, 31)
-        Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(87, 13)
-        Me.Label9.TabIndex = 35
-        Me.Label9.Text = "Nome Associado"
-        '
-        'Label10
-        '
-        Me.Label10.AutoSize = True
-        Me.Label10.Location = New System.Drawing.Point(317, 54)
-        Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(79, 13)
-        Me.Label10.TabIndex = 36
-        Me.Label10.Text = "CPF Associado"
-        '
-        'txtNomeAsso
-        '
-        Me.txtNomeAsso.Location = New System.Drawing.Point(410, 28)
-        Me.txtNomeAsso.Name = "txtNomeAsso"
-        Me.txtNomeAsso.Size = New System.Drawing.Size(135, 20)
-        Me.txtNomeAsso.TabIndex = 37
-        '
-        'txtCpfAssociado
-        '
-        Me.txtCpfAssociado.Location = New System.Drawing.Point(410, 51)
-        Me.txtCpfAssociado.Name = "txtCpfAssociado"
-        Me.txtCpfAssociado.Size = New System.Drawing.Size(135, 20)
-        Me.txtCpfAssociado.TabIndex = 38
+        Me.CheckedListBox2.FormattingEnabled = True
+        Me.CheckedListBox2.Location = New System.Drawing.Point(375, 20)
+        Me.CheckedListBox2.Name = "CheckedListBox2"
+        Me.CheckedListBox2.Size = New System.Drawing.Size(120, 94)
+        Me.CheckedListBox2.TabIndex = 39
         '
         'Form1
         '
@@ -454,12 +394,6 @@ Partial Class Form1
     Friend WithEvents txtCnpj As TextBox
     Friend WithEvents Panel1 As Panel
     Friend WithEvents Panel2 As Panel
-    Friend WithEvents Label7 As Label
-    Friend WithEvents txtCNPJasso As TextBox
-    Friend WithEvents txtEmpAsso As TextBox
-    Friend WithEvents Label8 As Label
-    Friend WithEvents txtCpfAssociado As TextBox
-    Friend WithEvents txtNomeAsso As TextBox
-    Friend WithEvents Label10 As Label
-    Friend WithEvents Label9 As Label
+    Public WithEvents CheckedListBox1 As CheckedListBox
+    Friend WithEvents CheckedListBox2 As CheckedListBox
 End Class
