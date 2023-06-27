@@ -261,9 +261,20 @@ Public Class Form1
 
         Return -1 ' Valor padrão se nenhum item for selecionado ou o índice for inválido
     End Function
-    Private Sub btnExcluir_Click(sender As Object, e As EventArgs) Handles btnExcluir.Click
+    Private Sub btnExcluir_Click(sender As Object, e As EventArgs) Handles btnExcluir.Click 'exluir associado
         Try
             connection = New SqlConnection("Data Source=DESKTOP-TRVTAH5\SQLEXPRESS;Initial Catalog=S4E;Integrated Security=True")
+
+            ' Remover as associações do associado com empresas na tabela de relacionamento
+            Dim strSQL As String = "DELETE FROM Relacionamento WHERE Id_asso = @IdAssociado"
+            Using connection As New SqlConnection("Data Source=DESKTOP-TRVTAH5\SQLEXPRESS;Initial Catalog=S4E;Integrated Security=True")
+                connection.Open()
+                Using command As New SqlCommand(strSQL, connection)
+                    command.Parameters.AddWithValue("@IdAssociado", txtId.Text)
+
+                    command.ExecuteNonQuery()
+                End Using
+            End Using
 
             strSQL = "DELETE associados WHERE Id_associado = @ID"
 
@@ -272,8 +283,8 @@ Public Class Form1
 
             connection.Open()
             command.ExecuteNonQuery()
-            ExluirRelacionamentoAssociadoEmpresa()
 
+            MessageBox.Show("Exluido com sucesso")
         Catch ex As Exception
             MsgBox(ex.Message)
         Finally
@@ -281,22 +292,6 @@ Public Class Form1
             command.Clone()
             connection = Nothing
             command = Nothing
-        End Try
-    End Sub
-
-    Private Sub ExluirRelacionamentoAssociadoEmpresa()
-        Try
-            connection = New SqlConnection("Data Source=DESKTOP-TRVTAH5\SQLEXPRESS;Initial Catalog=S4E;Integrated Security=True")
-            connection.Open()
-
-            strSQL = "DELETE Relacionamento WHERE Id_asso = @Id"
-
-            command = New SqlCommand(strSQL, connection)
-            command.Parameters.AddWithValue("@Id", txtId.Text)
-
-            command.ExecuteNonQuery()
-        Catch ex As Exception
-            MsgBox(ex.Message)
         End Try
     End Sub
     '-----------------------------------------AREA DA EMPRESA----------------------------------------------------
@@ -520,12 +515,21 @@ Public Class Form1
         Try
             connection = New SqlConnection("Data Source=DESKTOP-TRVTAH5\SQLEXPRESS;Initial Catalog=S4E;Integrated Security=True")
 
+            ' Remover as associações do associado com empresas na tabela de relacionamento
+            Dim strSQL As String = "DELETE FROM Relacionamento WHERE Id_empre = @IdEmpresa"
+            Using connection As New SqlConnection("Data Source=DESKTOP-TRVTAH5\SQLEXPRESS;Initial Catalog=S4E;Integrated Security=True")
+                connection.Open()
+                Using command As New SqlCommand(strSQL, connection)
+                    command.Parameters.AddWithValue("@IdEmpresa", txtIdEmp.Text)
+
+                    command.ExecuteNonQuery()
+                End Using
+            End Using
+
             strSQL = "DELETE empresas WHERE Id_empresa = @ID"
 
             command = New SqlCommand(strSQL, connection)
             command.Parameters.AddWithValue("@ID", txtIdEmp.Text)
-
-            ExluirRelacionamentoEmpresaAssociado()
             connection.Open()
 
             command.ExecuteNonQuery()
@@ -541,22 +545,6 @@ Public Class Form1
         End Try
     End Sub
 
-    Private Sub ExluirRelacionamentoEmpresaAssociado()
-        Try
-            connection = New SqlConnection("Data Source=DESKTOP-TRVTAH5\SQLEXPRESS;Initial Catalog=S4E;Integrated Security=True")
-            connection.Open()
-
-            strSQL = "DELETE Relacionamento WHERE Id_empre = @IdEmp"
-
-            command = New SqlCommand(strSQL, connection)
-            command.Parameters.AddWithValue("@IdEmp", txtIdEmp.Text)
-
-            command.ExecuteNonQuery()
-            connection.Close()
-        Catch ex As Exception
-            MsgBox(ex.Message)
-        End Try
-    End Sub
     Private Sub Button5_Click(sender As Object, e As EventArgs) Handles ConsultarIDEmp.Click 'pesquisar empresa por Id
         Try
             connection = New SqlConnection("Data Source=DESKTOP-TRVTAH5\SQLEXPRESS;Initial Catalog=S4E;Integrated Security=True")
